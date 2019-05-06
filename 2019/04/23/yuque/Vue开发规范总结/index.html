@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="首先说下契机，最近公司发生了几次由于不同人ide格式化差异导致的代码冲突覆盖问题，对团队协同开发造成了不小影响，在浪费时间解决冲突的同时也导致了最新代码被覆盖成  我作为其中一员也是不胜其烦，向leader提出问题后，把解决规范的任务给到了我解决。虽然由于平时开发除了eslint以外，对相...">
+<meta name="keywords" content="javascript vue">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Vue开发规范总结">
+<meta property="og:url" content="http://yoursite.com/2019/04/23/yuque/Vue开发规范总结/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="首先说下契机，最近公司发生了几次由于不同人ide格式化差异导致的代码冲突覆盖问题，对团队协同开发造成了不小影响，在浪费时间解决冲突的同时也导致了最新代码被覆盖成  我作为其中一员也是不胜其烦，向leader提出问题后，把解决规范的任务给到了我解决。虽然由于平时开发除了eslint以外，对相...">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2019/png/320817/1556022818994-65413a52-2e27-4c5e-a609-9cf86b1d6bbc.png#align=left&display=inline&height=21&name=%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202019-04-07%20%E4%B8%8B%E5%8D%882.33.45.png&originHeight=68&originWidth=2420&size=39716&status=done&width=746">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2019/png/320817/1556024491792-c6d47cbe-8c39-4152-be77-ff502da0584e.png#align=left&display=inline&height=374&name=%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202019-04-07%20%E4%B8%8B%E5%8D%882.57.25.png&originHeight=1258&originWidth=2510&size=426713&status=done&width=746">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2019/png/320817/1556510140853-7d364fc6-9593-42a1-a4f6-ef425d100cf6.png#align=left&display=inline&height=55&name=%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202019-04-29%20%E4%B8%8A%E5%8D%8811.37.17.png&originHeight=136&originWidth=1854&size=49129&status=done&width=746">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2019/png/320817/1556510195822-59e53064-b7e0-45a6-91a3-611112c1e69e.png#align=left&display=inline&height=51&name=%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202019-04-29%20%E4%B8%8A%E5%8D%8811.53.41.png&originHeight=124&originWidth=1824&size=44972&status=done&width=746">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2019/png/320817/1556510329984-5bc7a234-9ecc-43c9-ba5e-594b56b38728.png#align=left&display=inline&height=400&name=%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202019-04-29%20%E4%B8%8A%E5%8D%8811.57.47.png&originHeight=466&originWidth=870&size=90541&status=done&width=746">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2019/png/320817/1556521211878-f4153e56-4a3f-4586-86bf-bd676c682b92.png#align=left&display=inline&height=243&name=%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202019-04-29%20%E4%B8%8B%E5%8D%882.56.20.png&originHeight=496&originWidth=878&size=187569&status=done&width=430">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2019/png/320817/1556521578970-de6b5f46-df9d-412a-b21b-9c69045d2f74.png#align=left&display=inline&height=308&name=%E4%BC%81%E4%B8%9A%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_1840b151-a140-4f25-aa95-01dcb3681bfd.png&originHeight=383&originWidth=928&size=72876&status=done&width=746">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2019/png/320817/1556589822640-64619bef-6a55-4f24-b20b-eed497c0746d.png#align=left&display=inline&height=195&name=%E4%BC%81%E4%B8%9A%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_e7b96fa6-216f-46c9-81e1-a6e8cbe13cb3.png&originHeight=325&originWidth=1070&size=70310&status=done&width=642">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2019/png/320817/1556589945994-fd43731e-5f1e-4279-b8ce-e7700d7e27aa.png#align=left&display=inline&height=204&name=%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202019-04-30%20%E4%B8%8A%E5%8D%8810.05.33.png&originHeight=358&originWidth=562&size=34493&status=done&width=320">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2019/png/320817/1556590563464-32b6d1e4-142e-46a8-9e8d-a3fc2b16aa78.png#align=left&display=inline&height=362&name=%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202019-04-30%20%E4%B8%8A%E5%8D%8810.15.36.png&originHeight=740&originWidth=560&size=69187&status=done&width=274">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2019/png/320817/1556590561202-ea423b76-7cdd-458a-851c-ace710a8b39a.png#align=left&display=inline&height=180&name=%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202019-04-30%20%E4%B8%8A%E5%8D%8810.05.33.png&originHeight=358&originWidth=562&size=34493&status=done&width=282">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2019/png/320817/1557135879735-b073cefe-b8c1-44fe-bea5-678192349fc5.png#align=left&display=inline&height=292&name=%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202019-05-06%20%E4%B8%8B%E5%8D%885.42.10.png&originHeight=530&originWidth=736&size=81622&status=done&width=405">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2019/png/320817/1557136791792-98d23e92-4e28-4cb2-856c-c44c249a37d8.png#align=left&display=inline&height=394&name=%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202019-05-06%20%E4%B8%8B%E5%8D%885.57.49.png&originHeight=756&originWidth=798&size=114382&status=done&width=416">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2019/png/320817/1557137419037-f6e5927e-8b40-454c-bde8-fbf528da81f6.png#align=left&display=inline&height=167&name=%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202019-05-06%20%E4%B8%8B%E5%8D%886.09.06.png&originHeight=167&originWidth=614&size=48790&status=done&width=614">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2019/jpeg/320817/1557137606579-b768eae3-9119-4df6-b103-9650fa66bae2.jpeg#align=left&display=inline&height=438&name=WechatIMG58.jpeg&originHeight=1334&originWidth=750&size=48785&status=done&width=246">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2019/jpeg/320817/1557137613247-1c6fa9ec-ecdb-461d-b3c0-501d7f208aae.jpeg#align=left&display=inline&height=438&name=WechatIMG59.jpeg&originHeight=1334&originWidth=750&size=50195&status=done&width=246">
+<meta property="og:updated_time" content="2019-05-06T10:24:25.125Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Vue开发规范总结">
+<meta name="twitter:description" content="首先说下契机，最近公司发生了几次由于不同人ide格式化差异导致的代码冲突覆盖问题，对团队协同开发造成了不小影响，在浪费时间解决冲突的同时也导致了最新代码被覆盖成  我作为其中一员也是不胜其烦，向leader提出问题后，把解决规范的任务给到了我解决。虽然由于平时开发除了eslint以外，对相...">
+<meta name="twitter:image" content="https://cdn.nlark.com/yuque/0/2019/png/320817/1556022818994-65413a52-2e27-4c5e-a609-9cf86b1d6bbc.png#align=left&display=inline&height=21&name=%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202019-04-07%20%E4%B8%8B%E5%8D%882.33.45.png&originHeight=68&originWidth=2420&size=39716&status=done&width=746">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/04/23/yuque/Vue开发规范总结/">
+
+
+
+
+
+  <title>Vue开发规范总结 | Hexo</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hexo</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">个人学习博客</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/23/yuque/Vue开发规范总结/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zwow">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Vue开发规范总结</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-23T17:31:05+08:00">
+                2019-04-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+              <div class="post-description">
+                    首先说下契机，最近公司发生了几次由于不同人ide格式化差异导致的代码冲突覆盖问题，对团队协同开发造成了不小影响，在浪费时间解决冲突的同时也导致了最新代码被覆盖成  我作为其中一员也是不胜其烦，向leader提出问题后，把解决规范的任务给到了我解决。虽然由于平时开发除了eslint以外，对相...
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>  首先说下契机，最近公司发生了几次由于不同人ide格式化差异导致的代码冲突覆盖问题，对团队协同开发造成了不小影响，在浪费时间解决冲突的同时也导致了最新代码被覆盖成<br>  我作为其中一员也是不胜其烦，向leader提出问题后，把解决规范的任务给到了我解决。虽然由于平时开发除了eslint以外，对相关内容接触不多而碰到了不少坑，但是还是对代码规范以及git有了更深刻理解。<br>  通过查看其它公司制定规范的案例和自己的思考，从自己的想法出发归纳出了规范实行的三个方面，其中包括：</p>
+<ul>
+<li>代码风格校验(eslint)</li>
+<li>IDE格式化(eslint、vetur)</li>
+<li><p>版本管理工具的提交校验(git pre-commit hook)</p>
+<p>三者以eslint为核心，组合起来形成一套流程。<br><a name="74417ed4"></a></p>
+<h3 id="一、代码风格校验工具"><a href="#一、代码风格校验工具" class="headerlink" title="一、代码风格校验工具"></a>一、代码风格校验工具</h3><p>作为js核心的校验工具，eslint也是作为了规范核心的一环。其实公司项目里也一直在使用，只不过由于历史遗留原因规则，使用的是仅校验js的<code>airbnb-base</code>规范，而前端项目技术栈为vue，即使加上vscode上的vetur插件，eslint也只能校验到script标签内的js代码，而template模板内的代码基本处于放飞自我的状态，不受任何规则限制。常见的例子就是当某个组件绑定的属性超多时，单行代码长出天际，代码可读性极差。<br><img src="https://cdn.nlark.com/yuque/0/2019/png/320817/1556022818994-65413a52-2e27-4c5e-a609-9cf86b1d6bbc.png#align=left&amp;display=inline&amp;height=21&amp;name=%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202019-04-07%20%E4%B8%8B%E5%8D%882.33.45.png&amp;originHeight=68&amp;originWidth=2420&amp;size=39716&amp;status=done&amp;width=746" alt="屏幕快照 2019-04-07 下午2.33.45.png"></p>
+<p>实际上，现在eslint已经增加了针对vue文件里template代码段的校验规则plugin:vue/essential等及配套插件 <a href="https://eslint.vuejs.org/rules/no-shared-component-data.html" target="_blank" rel="noopener">eslint-plugin-vue</a>，详情可以查看文档的规则列表，搭配了例子讲得很清晰，没有中文翻译。</p>
+</li>
+</ul>
+<p><img src="https://cdn.nlark.com/yuque/0/2019/png/320817/1556024491792-c6d47cbe-8c39-4152-be77-ff502da0584e.png#align=left&amp;display=inline&amp;height=374&amp;name=%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202019-04-07%20%E4%B8%8B%E5%8D%882.57.25.png&amp;originHeight=1258&amp;originWidth=2510&amp;size=426713&amp;status=done&amp;width=746" alt="屏幕快照 2019-04-07 下午2.57.25.png"></p>
+<p>  目前用vuecli3搭建项目，只要是在创建时选择了使用eslint校验的都会在项目里自动安装eslint-plugin-vue，无需自行安装。它能够将大多数template代码块的格式错误暴露给使用者，比如重复声明key属性等，能解决部分template内代码风格不统一的问题。<br><a name="fa8d05ae"></a></p>
+<h3 id="二、IDE格式化插件"><a href="#二、IDE格式化插件" class="headerlink" title="二、IDE格式化插件"></a>二、IDE格式化插件</h3><p>  上一部分讲到eslint帮助解决了绝大多数代码问题，然而实际使用中依然存在着问题，比方说当代码不符合eslint规则的时候，能否通过自动格式化修改成符合规则的样子？以目前使用最多的vscode为例，它提供了和eslint同名的插件，能够在粘贴、保存代码的时候自动修改部分不符合eslint规则的代码段。使用方法是，首先需要下载插件，同时在vscode配置文件setting.json加入以下配置。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  "editor.formatOnSave": true, // 编辑器在保存的时候格式化代码</span><br><span class="line">  "eslint.autoFixOnSave": true, // eslint在保存的时候格式化代码</span><br><span class="line"></span><br><span class="line">  // 应用eslint格式化的语言种类</span><br><span class="line">  "eslint.validate": [</span><br><span class="line">   "javascript",</span><br><span class="line">   "javascriptreact",</span><br><span class="line">   &#123;</span><br><span class="line">     <span class="attr">"language"</span>: <span class="string">"html"</span>,</span><br><span class="line"></span><br><span class="line">     <span class="attr">"autoFix"</span>: <span class="literal">true</span>,</span><br><span class="line">   &#125;,</span><br><span class="line">   &#123;</span><br><span class="line">     <span class="attr">"language"</span>: <span class="string">"vue"</span>,</span><br><span class="line"></span><br><span class="line">     <span class="attr">"autoFix"</span>: <span class="literal">true</span>,</span><br><span class="line">   &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>  配置后，在保存时eslint插件就会对代码自动格式化。但实际使用中，格式化还不足够，例如上面说到的单行代码过长问题，格式化依然没有将代码自动换行。查阅规则列表发现在strongly recommended的规则里，有将存在多属性的标签自动换行的规则<code>vue/max-attributes-per-line</code>。尝试使用strongly recommended规则，在eslintrc.js加入</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">extends: [</span><br><span class="line">  <span class="string">'plugin:vue/strongly-recommended'</span>,</span><br><span class="line">  <span class="string">'@vue/airbnb'</span>,</span><br><span class="line">],</span><br></pre></td></tr></table></figure>
+<p>虽然是可以用了，但是实际并没有按预期格式化。</p>
+<p>格式化前代码是这样的，<br><img src="https://cdn.nlark.com/yuque/0/2019/png/320817/1556510140853-7d364fc6-9593-42a1-a4f6-ef425d100cf6.png#align=left&amp;display=inline&amp;height=55&amp;name=%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202019-04-29%20%E4%B8%8A%E5%8D%8811.37.17.png&amp;originHeight=136&amp;originWidth=1854&amp;size=49129&amp;status=done&amp;width=746" alt="屏幕快照 2019-04-29 上午11.37.17.png"></p>
+<p>格式化后变成了下面奇怪的样子。<br><img src="https://cdn.nlark.com/yuque/0/2019/png/320817/1556510195822-59e53064-b7e0-45a6-91a3-611112c1e69e.png#align=left&amp;display=inline&amp;height=51&amp;name=%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202019-04-29%20%E4%B8%8A%E5%8D%8811.53.41.png&amp;originHeight=124&amp;originWidth=1824&amp;size=44972&amp;status=done&amp;width=746" alt="屏幕快照 2019-04-29 上午11.53.41.png"><br>  stack overflow上面有一篇<a href="https://stackoverflow.com/questions/52102705/cant-get-correct-autoformat-on-save-in-visual-studio-code-with-eslint-and-prett" target="_blank" rel="noopener">文章</a>解释了这个问题，大致原因是eslint某些规则的格式化需要格式化数次才完成，而vscode里eslint插件只会在保存的时候格式化一次，并没走完格式化的流程。当你不断保存代码后，eslint会继续一步一步执行格式化，直到格式化完成变成下面的样子。<br><img src="https://cdn.nlark.com/yuque/0/2019/png/320817/1556510329984-5bc7a234-9ecc-43c9-ba5e-594b56b38728.png#align=left&amp;display=inline&amp;height=400&amp;name=%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202019-04-29%20%E4%B8%8A%E5%8D%8811.57.47.png&amp;originHeight=466&amp;originWidth=870&amp;size=90541&amp;status=done&amp;width=746" alt="屏幕快照 2019-04-29 上午11.57.47.png"><br><br><br>到这里不得不提vue开发者十分熟悉的插件vetur。以往开发中，我只用到了它提供的语法高亮和属性联想功能，而实际上它还能针对每一个代码块如template、script、style使用不同的格式化工具，达到相同的目的。<br>首先根据下图步骤进入到vetur插件的配置页。<br><img src="https://cdn.nlark.com/yuque/0/2019/png/320817/1556521211878-f4153e56-4a3f-4586-86bf-bd676c682b92.png#align=left&amp;display=inline&amp;height=243&amp;name=%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202019-04-29%20%E4%B8%8B%E5%8D%882.56.20.png&amp;originHeight=496&amp;originWidth=878&amp;size=187569&amp;status=done&amp;width=430" alt="屏幕快照 2019-04-29 下午2.56.20.png"><br><br><br><img src="https://cdn.nlark.com/yuque/0/2019/png/320817/1556521578970-de6b5f46-df9d-412a-b21b-9c69045d2f74.png#align=left&amp;display=inline&amp;height=308&amp;name=%E4%BC%81%E4%B8%9A%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_1840b151-a140-4f25-aa95-01dcb3681bfd.png&amp;originHeight=383&amp;originWidth=928&amp;size=72876&amp;status=done&amp;width=746" alt="企业微信截图_1840b151-a140-4f25-aa95-01dcb3681bfd.png"></p>
+<p>里面列出了vetur针对vue里面每一种代码块使用的格式化工具的选项。而vetur针对vue文件里面的<code>&lt;template&gt;</code>代码段，使用了prettyhtml插件进行格式化。正如官方描述，<br></p>
+<blockquote>
+<p>Opinionated general formatter for your Angular, Vue, Svelte or pure HTML5 templates. </p>
+</blockquote>
+<p><br><a href="https://github.com/Prettyhtml/prettyhtml" target="_blank" rel="noopener">prettyhtml</a>是一款针对vue等使用的通用格式化插件，也是vetur推使用的。通过比较，我发现这个插件它格式化的结果跟使用eslint多次保存后格式化的结果是最为一致的，不会像prettier和js-beutify-html(vetur之前默认使用)按照自己的规则格式化。<br>因此我们需要将<code>&lt;template&gt;</code>的格式化交给vetur，而对于<code>&lt;script&gt;</code>标签里的js代码格式化，还是使用eslint插件进行，两者各司其职。所以这里就将vetur对js代码的格式化设置为<code>none</code>，防止两者发生冲突。</p>
+<p>将所上述的配置，vscode就可以对vue文件内各个代码块进行比较统一的eslint规则格式化了，这里说的比较实际上是指prettyhtml与eslint-plugin-vue提供的规则有少许出入，根据eslint的话，含多属性的标签一定会换行，而prettyhtml则会结合标签的长度决定换行，相对会美观一点。</p>
+<p><a name="KUfkx"></a></p>
+<h4 id="针对项目配置格式化"><a href="#针对项目配置格式化" class="headerlink" title="针对项目配置格式化"></a>针对项目配置格式化</h4><p>如果团队需要强制每个开发人员使用插件的及对应的配置，可以在项目文件夹新建工作区配置文件settings.json。实现起来很简单，只需要将用户设置里面的settings.json内容复制到工作区保存，vscode就会自动生成放进根目录的.vscode文件夹。<br><img src="https://cdn.nlark.com/yuque/0/2019/png/320817/1556589822640-64619bef-6a55-4f24-b20b-eed497c0746d.png#align=left&amp;display=inline&amp;height=195&amp;name=%E4%BC%81%E4%B8%9A%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_e7b96fa6-216f-46c9-81e1-a6e8cbe13cb3.png&amp;originHeight=325&amp;originWidth=1070&amp;size=70310&amp;status=done&amp;width=642" alt="企业微信截图_e7b96fa6-216f-46c9-81e1-a6e8cbe13cb3.png"><br><br><br><img src="https://cdn.nlark.com/yuque/0/2019/png/320817/1556589945994-fd43731e-5f1e-4279-b8ce-e7700d7e27aa.png#align=left&amp;display=inline&amp;height=204&amp;name=%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202019-04-30%20%E4%B8%8A%E5%8D%8810.05.33.png&amp;originHeight=358&amp;originWidth=562&amp;size=34493&amp;status=done&amp;width=320" alt="屏幕快照 2019-04-30 上午10.05.33.png"><br>接着再将.vscode文件夹提交到远端仓库里，以后每一个参与项目的开发人员都会把对应的项目配置文件随着项目拉下来，统一配置。<br><br><br><strong>注意：工作区配置文件夹只有当它的位置在**</strong>所打开的工作区域根目录<strong>**时生效，看文字不好说明白，那就直接上图了。</strong><br><strong><br></strong>             <img src="https://cdn.nlark.com/yuque/0/2019/png/320817/1556590563464-32b6d1e4-142e-46a8-9e8d-a3fc2b16aa78.png#align=left&amp;display=inline&amp;height=362&amp;name=%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202019-04-30%20%E4%B8%8A%E5%8D%8810.15.36.png&amp;originHeight=740&amp;originWidth=560&amp;size=69187&amp;status=done&amp;width=274" alt="屏幕快照 2019-04-30 上午10.15.36.png">          <img src="https://cdn.nlark.com/yuque/0/2019/png/320817/1556590561202-ea423b76-7cdd-458a-851c-ace710a8b39a.png#align=left&amp;display=inline&amp;height=180&amp;name=%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202019-04-30%20%E4%B8%8A%E5%8D%8810.05.33.png&amp;originHeight=358&amp;originWidth=562&amp;size=34493&amp;status=done&amp;width=282" alt="屏幕快照 2019-04-30 上午10.05.33.png"><strong><br></strong><br>留意图片顶部的工作区名称，第一幅图打开的工作区域是文件夹YP-WEB-CONSOLE,而.vscode文件夹不在此目录下，所以工作区配置不会生效；而第二幅图打开的是VUECLI3文件夹，根目录有.vscode文件夹，工作区配置生效。<br><a name="838efe1d"></a></p>
+<h3 id="三、版本管理工具提交校验"><a href="#三、版本管理工具提交校验" class="headerlink" title="三、版本管理工具提交校验"></a>三、版本管理工具提交校验</h3><p>前面两部分讲解了，如何在团队成员在编写代码时能够按统一的规范格式化代码，而本部分的提交校验则是为了防止成员为了一时之便，在编写过程中绕过了规范限制，直接将非法代码提交到代码库造成污染。<br>以现在比较常用的git作为实例，git在提交代码的环节针对不同时刻提供了数个可供使用的<a href="https://git-scm.com/book/zh/v2/%E8%87%AA%E5%AE%9A%E4%B9%89-Git-Git-%E9%92%A9%E5%AD%90#r_email_hooks" target="_blank" rel="noopener">hooks</a>，这里我们需要达到的目的是校验不通过的代码进行拦截并终止提交过程，所以用到的是pre-commit hook钩子（还有一个常用的钩子commit-msg，通常会用来核对提交信息是否遵循指定的模板，有兴趣的可以自行google，这里不详细讲）。<br>而一般要在git hook进行操作是需要使用底层命令编写项目中的 <code>.git/hooks</code> 文件的，不过为了降低实现成本，可以使用一个现有的工具<a href="https://github.com/typicode/husky" target="_blank" rel="noopener">husky</a>。husky它可以通过npm进行安装，集成了调用各种git hook的底层命令，使用起来非常傻瓜式，只需要跟着文档走就行，下面是使用例子：</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2019/png/320817/1557135879735-b073cefe-b8c1-44fe-bea5-678192349fc5.png#align=left&amp;display=inline&amp;height=292&amp;name=%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202019-05-06%20%E4%B8%8B%E5%8D%885.42.10.png&amp;originHeight=530&amp;originWidth=736&amp;size=81622&amp;status=done&amp;width=405" alt="屏幕快照 2019-05-06 下午5.42.10.png"><br><br><br>这样就能在提交时pre-commit钩子里面调用eslint校验代码，若是有不符合规则的代码，马上就会终止提交，避免代码污染。不过加入校验后还有两个问题：<br>1.第一点是eslint会在提交的时候对整个项目里所有文件进行校验，当项目比较庞大的时候，校验会变得十分漫长，降低了提交的速度；<br>2.第二点是校验后eslint会自动格式化一些不符合规则的代码，但是需要你再次提交自动格式化代码带来的代码更改。<br>通过google，发现了一个解决问题的插件<a href="https://github.com/okonet/lint-staged" target="_blank" rel="noopener">lint-staged</a>，它将校验的策略从校验整个项目代码改变为只校验本次修改、新增的代码或文件，将校验范围大大缩减，从而提高了校验的效率；同时它可以将多条命令按顺序合并进行，刚才提及的需要再次提交的问题可以通过<code>git add</code> 加入需要提交的更改中。lint-staged同样可以使用npm包安装，使用后的package.json变为下面的样子：<br><br><br><img src="https://cdn.nlark.com/yuque/0/2019/png/320817/1557136791792-98d23e92-4e28-4cb2-856c-c44c249a37d8.png#align=left&amp;display=inline&amp;height=394&amp;name=%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202019-05-06%20%E4%B8%8B%E5%8D%885.57.49.png&amp;originHeight=756&amp;originWidth=798&amp;size=114382&amp;status=done&amp;width=416" alt="屏幕快照 2019-05-06 下午5.57.49.png"><br><br><br>这样就能够实现快速校验的目的了，来看一下加入pre-commit后的效果吧。<br><img src="https://cdn.nlark.com/yuque/0/2019/png/320817/1557137419037-f6e5927e-8b40-454c-bde8-fbf528da81f6.png#align=left&amp;display=inline&amp;height=167&amp;name=%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202019-05-06%20%E4%B8%8B%E5%8D%886.09.06.png&amp;originHeight=167&amp;originWidth=614&amp;size=48790&amp;status=done&amp;width=614" alt="屏幕快照 2019-05-06 下午6.09.06.png"><br><br><br>粗略测试了下加入lint-staged前后的提交校验速度，同样提交相同的代码更改，左边是加入前，右边是加入后，感觉还是有些效果的。<br><br><br><img src="https://cdn.nlark.com/yuque/0/2019/jpeg/320817/1557137606579-b768eae3-9119-4df6-b103-9650fa66bae2.jpeg#align=left&amp;display=inline&amp;height=438&amp;name=WechatIMG58.jpeg&amp;originHeight=1334&amp;originWidth=750&amp;size=48785&amp;status=done&amp;width=246" alt="WechatIMG58.jpeg">        <img src="https://cdn.nlark.com/yuque/0/2019/jpeg/320817/1557137613247-1c6fa9ec-ecdb-461d-b3c0-501d7f208aae.jpeg#align=left&amp;display=inline&amp;height=438&amp;name=WechatIMG59.jpeg&amp;originHeight=1334&amp;originWidth=750&amp;size=50195&amp;status=done&amp;width=246" alt="WechatIMG59.jpeg"><br><br><br>到此，整个规范流程已经基本建立了，项目成员又能冰释前嫌的代码冲突和丑陋代码，快活的结对编程了哈哈。<br><br><br>后续的话，其实还可以将整套规范制定一个基础的手脚架发布到npx上面，这样以后每一个新的项目都能使用这套规范，在此基础上面进行开发，而不必每一个项目重新制定一次。有时间我会继续把这部分给做好，再发布出来。<br><br><br>最后想说一嘴，工具是死的人是活的，这些规范工具归根到底是只防君子不防小人，只要理解了其中的原理，可以有各种方法绕过规范限制。而真正要实现团队的代码规范，我觉得不能仅仅靠这几个工具做限制，最核心的还是要在团队建设过程中强调规范的重要性，让团队成员心中都坚定规范统一的念头而不是怨念规则的繁杂琐碎，如此工具才能发挥它应有的作用吧。<br></p>
+<blockquote>
+<p>参考链接：<br>husky、lint-staged  <a href="https://zhuanlan.zhihu.com/p/35913229" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/35913229</a><br>eslint vscode plugin <a href="https://stackoverflow.com/questions/52102705/cant-get-correct-autoformat-on-save-in-visual-studio-code-with-eslint-and-prett" target="_blank" rel="noopener">https://stackoverflow.com/questions/52102705/cant-get-correct-autoformat-on-save-in-visual-studio-code-with-eslint-and-prett</a></p>
+</blockquote>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/04/23/yuque/测试CI部署到Hexo/" rel="next" title="测试CI部署到Hexo">
+                <i class="fa fa-chevron-left"></i> 测试CI部署到Hexo
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/05/06/hello-world/" rel="prev" title="Hello World">
+                Hello World <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Zwow</p>
+              <p class="site-description motion-element" itemprop="description">记录日常工作遇到的问题，学习的过程</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#一、代码风格校验工具"><span class="nav-number">1.</span> <span class="nav-text">一、代码风格校验工具</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二、IDE格式化插件"><span class="nav-number">2.</span> <span class="nav-text">二、IDE格式化插件</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#针对项目配置格式化"><span class="nav-number">2.1.</span> <span class="nav-text">针对项目配置格式化</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#三、版本管理工具提交校验"><span class="nav-number">3.</span> <span class="nav-text">三、版本管理工具提交校验</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Zwow</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
